@@ -1,12 +1,13 @@
 import os
+from datetime import datetime
 
 biblioteca = []
 
 def cadastrar_livro():
-  nome_livro = input ("Digite o nome do livro: ")
-  autor_livro = input ("Digite o nome do autor: ")
-  ano_livro = input ("Digite o ano de publicação: ")
-  editora_livro = input ("Digite o nome da editora: ")
+  nome_livro = input ("Digite o nome do livro: ").strip().title()
+  autor_livro = input ("Digite o nome do autor: ").strip().title()
+  ano_livro = input ("Digite o ano de publicação: ").strip()
+  editora_livro = input ("Digite o nome da editora: ").strip().title()
   while True:
         resposta = input("Você já leu esse livro? (s/n): ").strip().lower()
         if resposta.startswith('s'):
@@ -23,13 +24,15 @@ def cadastrar_livro():
   except ValueError:
         print("Valor inválido! Definindo preço como 0.0")
         preco_livro = 0.0
+  data_registro = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
   livro = {
     "nome": nome_livro,
     "autor": autor_livro,
     "ano": ano_livro,
     "editora": editora_livro,
     "lido": lido_bool,
-    "preço": preco_livro
+    "preço": preco_livro,
+    "data_registro": data_registro
   }
   biblioteca.append(livro)
   print (f"Livro {nome_livro} cadastrado com sucesso!")
@@ -37,7 +40,7 @@ def cadastrar_livro():
 
 def listar_livros():
   for livro in biblioteca:
-    print (f"Nome: {livro['nome'].ljust(22)}, Autor: {livro['autor'].ljust(20)}, Ano: {livro['ano'].ljust(20)}, Editora: {livro['editora'].ljust(20)}, Lido: {livro['lido']}, Preço: R${livro['preço']:.2f}")
+    print (f"Nome: {livro['nome']}, Autor: {livro['autor']}, Ano: {livro['ano']}, Editora: {livro['editora']}, Lido: {livro['lido']}, Preço: R${livro['preço']:.2f}, Data de Registro: {livro['data_registro']}")
   retornar_menu()
   
 def valor_colecao():
@@ -51,7 +54,7 @@ def deletar_livro():
     if livro['nome'] == nome_livro:
       biblioteca.remove(livro)
       print (f"Livro {nome_livro} deletado com sucesso!")
-      return
+      retornar_menu()
   print (f"Livro {nome_livro} não encontrado na biblioteca.")
   retornar_menu()
 
