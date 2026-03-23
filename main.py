@@ -137,9 +137,11 @@ def escolher_opcao():
       finalizar_app()
     else:
       opcao_invalida()
+      retornar_menu()
   except ValueError:
     opcao_invalida()
-  
+    retornar_menu()
+
 def main():
   os.system('cls')
   listar_titulo()
